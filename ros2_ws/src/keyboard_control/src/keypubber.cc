@@ -3,6 +3,7 @@
 
 #include <termios.h>
 #include <sstream>
+#include <iostream>
 
 int getch() {
     static struct termios oldt, newt;
@@ -21,14 +22,14 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "keypubber");
     ros::NodeHandle n;
 
-    ros::Publisher keypubber = n.advertise<std_msgs::String>("chatter", 1000);
+    ros::Publisher keypubber = n.advertise<std_msgs::String>("keypubber", 1000);
 
     ros::Rate loop_rate(10);
 
     while (ros::ok()) {
         char in = getch();
-
-        std_msgs::String msg;
+        
+	std_msgs::String msg;
 
         switch(in) {
             case 'r':
