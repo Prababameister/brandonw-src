@@ -1,2 +1,2 @@
-ros2ws/devel/
-ros2ws/build/
+ros2ws/devel/*
+ros2ws/build/*
