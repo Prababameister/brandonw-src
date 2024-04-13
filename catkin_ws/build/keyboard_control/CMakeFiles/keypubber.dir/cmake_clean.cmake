@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/ros2_ws/devel/lib/keyboard_control/keypubber"
-  "/ros2_ws/devel/lib/keyboard_control/keypubber.pdb"
+  "/catkin_ws/devel/lib/keyboard_control/keypubber"
+  "/catkin_ws/devel/lib/keyboard_control/keypubber.pdb"
   "CMakeFiles/keypubber.dir/src/keypubber.cc.o"
 )
 

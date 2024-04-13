@@ -1,8 +1,8 @@
-# Install script for directory: /ros2_ws/src/keyboard_control
+# Install script for directory: /catkin_ws/src/keyboard_control
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/ros2_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,37 +38,37 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/keyboard_control/cmake" TYPE FILE FILES "/ros2_ws/build/keyboard_control/catkin_generated/installspace/keyboard_control-msg-paths.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/keyboard_control/cmake" TYPE FILE FILES "/catkin_ws/build/keyboard_control/catkin_generated/installspace/keyboard_control-msg-paths.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/ros2_ws/devel/share/roseus/ros/keyboard_control")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/catkin_ws/devel/share/roseus/ros/keyboard_control")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  execute_process(COMMAND "/usr/bin/python3" -m compileall "/ros2_ws/devel/lib/python3/dist-packages/keyboard_control")
+  execute_process(COMMAND "/usr/bin/python3" -m compileall "/catkin_ws/devel/lib/python3/dist-packages/keyboard_control")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/ros2_ws/devel/lib/python3/dist-packages/keyboard_control")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/catkin_ws/devel/lib/python3/dist-packages/keyboard_control")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/ros2_ws/build/keyboard_control/catkin_generated/installspace/keyboard_control.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/catkin_ws/build/keyboard_control/catkin_generated/installspace/keyboard_control.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/keyboard_control/cmake" TYPE FILE FILES "/ros2_ws/build/keyboard_control/catkin_generated/installspace/keyboard_control-msg-extras.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/keyboard_control/cmake" TYPE FILE FILES "/catkin_ws/build/keyboard_control/catkin_generated/installspace/keyboard_control-msg-extras.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/keyboard_control/cmake" TYPE FILE FILES
-    "/ros2_ws/build/keyboard_control/catkin_generated/installspace/keyboard_controlConfig.cmake"
-    "/ros2_ws/build/keyboard_control/catkin_generated/installspace/keyboard_controlConfig-version.cmake"
+    "/catkin_ws/build/keyboard_control/catkin_generated/installspace/keyboard_controlConfig.cmake"
+    "/catkin_ws/build/keyboard_control/catkin_generated/installspace/keyboard_controlConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/keyboard_control" TYPE FILE FILES "/ros2_ws/src/keyboard_control/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/keyboard_control" TYPE FILE FILES "/catkin_ws/src/keyboard_control/package.xml")
 endif()
 

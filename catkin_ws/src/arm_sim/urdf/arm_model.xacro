@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot-arm">
+  <!--- Useful Math constants -->
+  <xacro:property name="pi" value="3.14159265359" />
+
+  <!--- Robot dimensions -->
+  <xacro:property name="radius_of_joint" value="0.0459" />
+  <xacro:property name="height_of_j123" value="0.0645" />
+  <xacro:property name="height_of_j456" value="0.03935" />
+
+  <xacro:property name="radius_of_limb" value="0.030163" />
+  <xacro:property name="length_of_link23" value="0.1941" />
+  <xacro:property name="length_of_link34" value="0.1691" />
+
+  <xacro:property name="theta1" value="0" />
+  <xacro:property name="d1" value="0.069829" />
+  <xacro:property name="a1" value="0.067114" />
+  <xacro:property name="alpha1" value="${pi / 2}" />
+
+  <xacro:property name="theta2" value="${pi / 2}" />
+  <xacro:property name="d2" value="0.070162" />
+  <xacro:property name="a2" value="0.209509" />
+  <xacro:property name="alpha2" value="${pi}" />
+
+  <xacro:property name="theta3" value="${pi / 2}" />
+  <xacro:property name="d3" value="0.067599" />
+  <xacro:property name="a3" value="0.18" />
+  <xacro:property name="alpha3" value="${pi}" />
+
+  <xacro:property name="theta4" value="0" />
+  <xacro:property name="d4" value="0.082409" />
+  <xacro:property name="a4" value="0" />
+  <xacro:property name="alpha4" value="${-pi / 2}" />
+
+  <xacro:property name="theta5" value="0" />
+  <xacro:property name="d5" value="0.0831" />
+  <xacro:property name="a5" value="0" />
+  <xacro:property name="alpha5" value="${pi / 2}" />
+
+  <xacro:property name="end_effector_length" value="0.05" />
+
+  <xacro:macro name="joint_object" params="name height radius">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <cylinder length="${height}" radius="${radius}"/>
+        </geometry>
+        <material name="yellow"/>
+      </visual>
+    </link>
+  </xacro:macro>
+
+  <!--- Materials to differentiate between joints -->
+  <material name="purple">
+    <color rgba="0.576 0.439 0.859 1"/>
+  </material>
+  <material name="yellow">
+    <color rgba="1.0 0.941 0.0 1"/>
+  </material>
+
+  <xacro:joint_object name="joint_1" height="${height_of_j123}" radius="${radius_of_joint}" />
+  <xacro:joint_object name="joint_2" height="${height_of_j123}" radius="${radius_of_joint}" />
+  <xacro:joint_object name="joint_3" height="${height_of_j123}" radius="${radius_of_joint}" />
+  <xacro:joint_object name="joint_4" height="${height_of_j456}" radius="${radius_of_joint}" />
+  <xacro:joint_object name="joint_5" height="${height_of_j456}" radius="${radius_of_joint}" />
+  <xacro:joint_object name="joint_6" height="${height_of_j456}" radius="${radius_of_joint}" />
+
+  <link name="link_23">
+    <visual>
+      <geometry>
+        <cylinder length="${length_of_link23}" radius="${radius_of_limb}"/>
+      </geometry>
+      <material name="purple"/>
+    </visual>
+  </link>
+  <link name="link_34">
+    <visual>
+      <geometry>
+        <cylinder length="${length_of_link23}" radius="${radius_of_limb}"/>
+      </geometry>
+      <material name="purple"/>
+    </visual>
+  </link>
+
+  <link name="end_effector">
+    <visual>
+      <geometry>
+        <box size="0.02 0.02 ${end_effector_length}"/>
+      </geometry>
+      <material name="purple"/>
+    </visual>
+  </link>
+
+  <joint name="joint_transform_1" type="revolute">
+    <parent link="joint_2"/>
+    <child link="joint_1"/>
+    <limit lower="0" upper="${2 * pi}" effort="30" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="${-a1} ${d1} 0" rpy="${alpha1} 0 ${theta1}"/>
+  </joint>
+
+  <joint name="joint_transform_2" type="revolute">
+    <parent link="joint_3"/>
+    <child link="joint_2"/>
+    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="${-a2} 0 ${d2}" rpy="${alpha2} 0 ${-theta2}"/>
+  </joint>
+
+  <joint name="link_to_joint_3" type="fixed">
+    <parent link="joint_3"/>
+    <child link="link_23"/>
+    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+    <origin xyz="${-(length_of_link23 / 2 + radius_of_joint)} 0 0" rpy="0 ${pi / 2} 0" />
+  </joint>
+
+  <joint name="joint_transform_3" type="revolute">
+    <parent link="joint_4"/>
+    <child link="joint_3"/>
+    <limit lower="0" upper="${2 * pi}" effort="30" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="${-a3} 0 ${d3}" rpy="${-alpha3} 0 ${theta3}"/>
+  </joint>
+
+  <joint name="link_to_joint_4" type="fixed">
+    <parent link="joint_4"/>
+    <child link="link_34"/>
+    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+    <origin xyz="${-(length_of_link34 / 2 + radius_of_joint)} 0 0" rpy="0 ${pi / 2} 0" />
+  </joint>
+
+  <joint name="joint_transform_4" type="revolute">
+    <parent link="joint_5"/>
+    <child link="joint_4"/>
+    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="${a4} ${d4} 0" rpy="${-alpha4} 0 ${theta4}"/>
+  </joint>
+
+  <joint name="joint_transform_5" type="revolute">
+    <parent link="joint_6"/>
+    <child link="joint_5"/>
+    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="${a5} ${-d5} 0" rpy="${-alpha5} 0 ${theta5}"/>
+  </joint>
+
+  <joint name="joint_transform_6" type="revolute">
+    <parent link="end_effector"/>
+    <child link="joint_6"/>
+    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 ${end_effector_length}" rpy="0 0 0"/>
+  </joint>
+</robot>

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /ros2_ws/src
+CMAKE_SOURCE_DIR = /catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /ros2_ws/build
+CMAKE_BINARY_DIR = /catkin_ws/build
 
 # Utility rule file for keyboard_control_generate_messages_py.
 
@@ -63,10 +63,10 @@ keyboard_control/CMakeFiles/keyboard_control_generate_messages_py.dir/build: key
 .PHONY : keyboard_control/CMakeFiles/keyboard_control_generate_messages_py.dir/build
 
 keyboard_control/CMakeFiles/keyboard_control_generate_messages_py.dir/clean:
-	cd /ros2_ws/build/keyboard_control && $(CMAKE_COMMAND) -P CMakeFiles/keyboard_control_generate_messages_py.dir/cmake_clean.cmake
+	cd /catkin_ws/build/keyboard_control && $(CMAKE_COMMAND) -P CMakeFiles/keyboard_control_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : keyboard_control/CMakeFiles/keyboard_control_generate_messages_py.dir/clean
 
 keyboard_control/CMakeFiles/keyboard_control_generate_messages_py.dir/depend:
-	cd /ros2_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /ros2_ws/src /ros2_ws/src/keyboard_control /ros2_ws/build /ros2_ws/build/keyboard_control /ros2_ws/build/keyboard_control/CMakeFiles/keyboard_control_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /catkin_ws/src /catkin_ws/src/keyboard_control /catkin_ws/build /catkin_ws/build/keyboard_control /catkin_ws/build/keyboard_control/CMakeFiles/keyboard_control_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : keyboard_control/CMakeFiles/keyboard_control_generate_messages_py.dir/depend
 

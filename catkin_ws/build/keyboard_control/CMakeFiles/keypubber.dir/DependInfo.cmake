@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/ros2_ws/src/keyboard_control/src/keypubber.cc" "/ros2_ws/build/keyboard_control/CMakeFiles/keypubber.dir/src/keypubber.cc.o"
+  "/catkin_ws/src/keyboard_control/src/keypubber.cc" "/catkin_ws/build/keyboard_control/CMakeFiles/keypubber.dir/src/keypubber.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -17,7 +17,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/ros2_ws/src/keyboard_control/include"
+  "/catkin_ws/src/keyboard_control/include"
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   )

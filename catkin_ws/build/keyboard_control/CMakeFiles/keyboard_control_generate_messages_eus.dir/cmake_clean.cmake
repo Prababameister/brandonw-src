@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/ros2_ws/devel/share/roseus/ros/keyboard_control/manifest.l"
+  "/catkin_ws/devel/share/roseus/ros/keyboard_control/manifest.l"
   "CMakeFiles/keyboard_control_generate_messages_eus"
 )
 

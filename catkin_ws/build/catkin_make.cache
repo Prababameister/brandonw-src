@@ -1,2 +1,2 @@
-keyboard_control
--DCATKIN_DEVEL_PREFIX=/ros2_ws/devel -DCMAKE_INSTALL_PREFIX=/ros2_ws/install -G Unix Makefiles
+arm_sim:keyboard_control
+-DCATKIN_DEVEL_PREFIX=/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/catkin_ws/install -G Unix Makefiles
