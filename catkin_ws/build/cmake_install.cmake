@@ -131,8 +131,12 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/catkin_ws/build/gtest/cmake_install.cmake")
+  include("/catkin_ws/build/gazebo_ros_demos/rrbot_control/cmake_install.cmake")
+  include("/catkin_ws/build/gazebo_ros_demos/rrbot_description/cmake_install.cmake")
+  include("/catkin_ws/build/gazebo_ros_demos/rrbot_gazebo/cmake_install.cmake")
   include("/catkin_ws/build/arm_sim/cmake_install.cmake")
   include("/catkin_ws/build/keyboard_control/cmake_install.cmake")
+  include("/catkin_ws/build/gazebo_ros_demos/gazebo_tutorials/cmake_install.cmake")
 
 endif()
 
