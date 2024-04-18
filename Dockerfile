@@ -6,5 +6,6 @@ SHELL ["/bin/bash", "-c"]
 
 ENV DISPLAY=novnc:0.0
 
-RUN apt-get update && apt-get install -y git wget python3-pip vim ros-${ROS_DISTRO}-rosserial-arduino ros-${ROS_DISTRO}-rosserial ros-${ROS_DISTRO}-ros-ign ros-noetic-xacro
+RUN apt-get update && apt-get install -y git wget python3-pip vim \\
+    ros-${ROS_DISTRO}-rosserial-arduino ros-${ROS_DISTRO}-rosserial ros-${ROS_DISTRO}-ros-ign ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-robot-state-controller
 RUN pip3 install setuptools==58.2.0

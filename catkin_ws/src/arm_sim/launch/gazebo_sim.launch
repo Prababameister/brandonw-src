@@ -1,0 +1,19 @@
+<launch>
+  <!-- param name="robot_description" command="$(find arm_sim)/urdf/arm_model.xacro" / -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find arm_sim)/urdf/arm_model.xacro'" />
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+  <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui" />
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="worlds/empty.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+    <arg name="paused" value="true"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="recording" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <node name="spawning_urdf" pkg="gazebo_ros" type="spawn_model" respawn="false" args="-urdf -model arm_model -param robot_description"/>
+</launch>

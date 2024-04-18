@@ -1,2 +1,2 @@
-arm_sim:gazebo_ros_demos/gazebo_tutorials:gazebo_ros_demos/rrbot_control:gazebo_ros_demos/rrbot_description:gazebo_ros_demos/rrbot_gazebo:keyboard_control
+arm_sim:keyboard_control
 -DCATKIN_DEVEL_PREFIX=/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/catkin_ws/install -G Unix Makefiles

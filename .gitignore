@@ -1,2 +1,2 @@
-ros2ws/devel/*
-ros2ws/build/*
+catkin_ws/devel/*
+ros2ws_ws/build/*
