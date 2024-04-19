@@ -1,92 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot-arm">
-  <!--- Robot dimensions -->
-  <xacro:property name="radius_of_joint" value="0.0459" />
-  <xacro:property name="height_of_j123" value="0.0645" />
-  <xacro:property name="height_of_j456" value="0.03935" />
+  <xacro:include filename="$(find arm_sim)/urdf/arm_dimensions.xacro">
+  <xacro:include filename="$(find arm_sim)/urdf/arm_macros.xacro">
 
-  <xacro:property name="radius_of_limb" value="0.030163" />
-  <xacro:property name="length_of_link23" value="0.1941" />
-  <xacro:property name="length_of_link34" value="0.1691" />
-
-  <xacro:property name="elevation" value="0.05" />
-
-  <xacro:property name="theta1" value="0" />
-  <xacro:property name="d1" value="0.069829" />
-  <xacro:property name="a1" value="0.067114" />
-  <xacro:property name="alpha1" value="${-pi / 2}" />
-
-  <xacro:property name="theta2" value="${-pi / 2}" />
-  <xacro:property name="d2" value="0.070162" />
-  <xacro:property name="a2" value="0.209509" />
-  <xacro:property name="alpha2" value="${pi}" />
-
-  <xacro:property name="theta3" value="${pi / 2}" />
-  <xacro:property name="d3" value="0.067599" />
-  <xacro:property name="a3" value="0.18" />
-  <xacro:property name="alpha3" value="${pi}" />
-
-  <xacro:property name="theta4" value="0" />
-  <xacro:property name="d4" value="0.082409" />
-  <xacro:property name="a4" value="0" />
-  <xacro:property name="alpha4" value="${-pi / 2}" />
-
-  <xacro:property name="theta5" value="${-pi / 2}" />
-  <xacro:property name="d5" value="0.0831" />
-  <xacro:property name="a5" value="0" />
-  <xacro:property name="alpha5" value="${pi / 2}" />
-
-  <xacro:property name="end_effector_length" value="0.05" />
-
-  <xacro:property name="motor_weight" value="0.69" />
-
-  <xacro:macro name="cylinder" params="name height radius color jmass">
-    <link name="${name}">
-      <collision>
-        <geometry>
-          <cylinder length="${height}" radius="${radius}"/>
-        </geometry>
-      </collision>
-
-      <visual>
-        <geometry>
-          <cylinder length="${height}" radius="${radius}"/>
-        </geometry>
-        <material name="${color}"/>
-      </visual>
-
-      <inertial>
-        <mass value="${motor_weight}" />
-        <inertia
-            ixx="${(jmass / 12) * (3 * radius * radius + height * height)}" ixy="0.0" ixz="0.0"
-            iyy="${(jmass / 12) * (3 * radius * radius + height * height)}" iyz="0.0"
-            izz="${jmass * radius * radius / 2}" />
-      </inertial>
-    </link>
-  </xacro:macro>
-
-  <xacro:macro name="dh_revolute_joint" params="name parent child theta d a alpha lower upper">
-    <joint name="${name}" type="revolute">
-      <parent link="${parent}"/>
-      <child link="${child}"/>
-      <limit lower="${lower}" upper="${upper}" effort="30" velocity="1"/>
-      <axis xyz="0 0 1"/>
-      <origin xyz="${a} 0 ${d}" rpy="${alpha} ${theta} 0"/>
-    </joint>
-  </xacro:macro>
-
-  <xacro:macro name="axis_trans_def" params="name">
-    <transmission name="${name}_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <actuator name="${name}_motor">
-        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-      <joint name="${name}">
-        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-      </joint>
-    </transmission>
-  </xacro:macro>
+  <xacro:property name="active_axis_config_file" value="$(find arm_sim)/config/activate.yaml">
+  <xacro:property name="active" value="${load_yaml(active_axis_config_file)}">
 
   <!--- Materials to differentiate between joints -->
   <material name="purple">
@@ -111,9 +29,7 @@
   <xacro:cylinder name="link_23" height="${length_of_link23}" radius="${radius_of_limb}" color="purple" jmass="1.0"/>
   <xacro:cylinder name="link_34" height="${length_of_link23}" radius="${radius_of_limb}" color="purple" jmass="1.0"/>
 
-
-  <!-- End-Effector which is a box rn (colored purple) -->
-
+  <!-- End-Effector which is a box (colored purple) -->
   <link name="end_effector">
     <collision>
       <geometry>
@@ -137,17 +53,22 @@
     </inertial>
   </link>
 
-  <!-- Replace macro with actual joints since this no worky -->
-  <xacro:dh_revolute_joint name="axis_1"
-                           parent="world" child="joint_1"
-                           theta="0.0" d="${elevation}" a="0.0" alpha="0.0"
-                           lower="0.0" upper="${2 * pi}" />
+  
+  <joint name="axis_1" type="revolute">
+    <parent link="world"/>
+    <child link="joint_1"/>
+    <limit lower="0.0" upper="${2 * pi}" effort="30" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 ${elevation}" rpy="0 0 0"/>
+  </joint>
 
-
-  <xacro:dh_revolute_joint name="axis_2"
-                           parent="joint_1" child="joint_2"
-                           theta="${theta1}" d="${d1}" a="${a1}" alpha="${alpha1}"
-                           lower="${-pi}" upper="${pi}" />
+  <joint name="axis_2" type="revolute">
+    <parent link="joint_1"/>
+    <child link="joint_2"/>
+    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="${a1} 0 ${d1}" rpy="${alpha1} ${theta1} 0"/>
+  </joint>
 
   <joint name="axis_3" type="revolute">
     <parent link="joint_2"/>

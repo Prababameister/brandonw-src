@@ -1,0 +1,55 @@
+<!--- Dimensions of the robot arm -->
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!--- General properties of motors and limbs of arm -->
+  <xacro:property name="radius_of_joint" value="0.0459" />
+  
+  <xacro:property name="height_of_j123" value="0.0645" />
+  <xacro:property name="height_of_j456" value="0.03935" />
+  
+  <xacro:property name="radius_of_limb" value="0.030163" />
+  <xacro:property name="length_of_link23" value="0.1941" />
+  <xacro:property name="length_of_link34" value="0.1691" />
+  
+  <!--- Height of the robot relative to the center of the world -->
+  <xacro:property name="elevation" value="0.05" />
+  
+  <!--- Denavit Hartenburg Parameter to transform axes -->
+  <!--- Axis 1 to Axis 2 -->
+  <xacro:property name="theta1" value="0" />
+  <xacro:property name="d1" value="0.069829" />
+  <xacro:property name="a1" value="0.067114" />
+  <xacro:property name="alpha1" value="${-pi / 2}" />
+  
+  <!--- Axis 2 to Axis 3 -->
+  <xacro:property name="theta2" value="${-pi / 2}" />
+  <xacro:property name="d2" value="0.070162" />
+  <xacro:property name="a2" value="0.209509" />
+  <xacro:property name="alpha2" value="${pi}" />
+  
+  <!--- Axis 3 to Axis 4 -->
+  <xacro:property name="theta3" value="${pi / 2}" />
+  <xacro:property name="d3" value="0.067599" />
+  <xacro:property name="a3" value="0.18" />
+  <xacro:property name="alpha3" value="${pi}" />
+  
+  <!--- Axis 4 to Axis 5 -->
+  <xacro:property name="theta4" value="0" />
+  <xacro:property name="d4" value="0.082409" />
+  <xacro:property name="a4" value="0" />
+  <xacro:property name="alpha4" value="${-pi / 2}" />
+  
+  <!--- Axis 5 to Axis 6 -->
+  <xacro:property name="theta5" value="${-pi / 2}" />
+  <xacro:property name="d5" value="0.0831" />
+  <xacro:property name="a5" value="0" />
+  <xacro:property name="alpha5" value="${pi / 2}" />
+  
+  <!--- Axis 6 to End Effector -->
+  <xacro:property name="end_effector_length" value="0.05" />
+  
+  <!--- Masses -->
+  <!--- Motor Mass -->
+  <xacro:property name="motor_weight" value="0.69" />
+</robot>

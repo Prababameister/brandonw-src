@@ -6,13 +6,6 @@
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
 
-  <rosparam command="load"
-            file="$(find arm_sim)/config/joints.yaml"
-            ns="arm_joint_state_controller" />
-  <rosparam command="load"
-            file="$(find arm_sim)/config/gazebo_ros_control_params.yaml"
-            ns="gazebo_ros_control_params" />
-
   <node name="arm_controller_spawner" pkg="controller_manager" type="spawner"
     args="arm_joint_state_controller
           arm_controller
