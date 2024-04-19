@@ -79,6 +79,7 @@
     <transmission name="${name}_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="${name}_motor">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="${name}">
@@ -105,11 +106,14 @@
   <xacro:cylinder name="joint_5" height="${height_of_j456}" radius="${radius_of_joint}" color="yellow" jmass="${motor_weight}"/>
   <xacro:cylinder name="joint_6" height="${height_of_j456}" radius="${radius_of_joint}" color="yellow" jmass="${motor_weight}"/>
 
-  <!--- Limbs of the robot that exist for collision purposes (colored purple) -->
+  <!-- Limbs of the robot that exist for collision purposes (colored purple) -->
+
   <xacro:cylinder name="link_23" height="${length_of_link23}" radius="${radius_of_limb}" color="purple" jmass="1.0"/>
   <xacro:cylinder name="link_34" height="${length_of_link23}" radius="${radius_of_limb}" color="purple" jmass="1.0"/>
 
-  <!--- End-Effector which is a box rn (colored purple) -->
+
+  <!-- End-Effector which is a box rn (colored purple) -->
+
   <link name="end_effector">
     <collision>
       <geometry>
@@ -206,9 +210,10 @@
   <xacro:axis_trans_def name="axis_5"/>
   <xacro:axis_trans_def name="axis_6"/>
 
+  <!-- Gazebo plugin -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>/arm_robot</robotNamespace>
     </plugin>
   </gazebo>
 </robot>
