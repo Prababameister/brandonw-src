@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 import rospy
 from std_msgs.msg import Float64
-from sensor_msgs.msg import JointState
-
-from joint_state_service.srv import *
 
 import sys
 from select import select
@@ -22,6 +19,8 @@ control_keys = [ ['q', 'a'],
                  ['y', 'h'] ]
 
 quit_key = '/'
+
+sensitivity = 0.2
 
 axis_pub = []
 
@@ -48,40 +47,25 @@ def getKey(settings, timeout):
 
     return key
 
-def joint_state_service_client():
-    rospy.wait_for_service('joint_state_request')
-    try:
-        joint_state = rospy.ServiceProxy('joint_state_request', JointPosition)
-        js = joint_state()
-
-        position = [js.axis_1, js.axis_2, js.axis_3, js.axis_4, js.axis_5, js.axis_6]
-        return position
-    except rospy.ServiceException as e:
-        print("Service call failed: %s"%e)
-
 def keyboard_controller():
     rospy.init_node('keyboard_controller', anonymous=True)
 
     rate = rospy.Rate(5)
 
     while not rospy.is_shutdown():
-        position = joint_state_service_client()
-
         k = getKey(settings, 0.5)
 
         if k == quit_key:
             break
 
         for x in range(6):
-            cur = position[x]
-            change = 0.0
+            vel = 0.0
             if k == control_keys[x][0]:
-                change = 0.2
+                vel = sensitivity
             elif k == control_keys[x][1]:
-                change = -0.2
+                vel = -sensitivity
 
-            new_pos = cur + change
-            axis_pub[x].publish(new_pos)
+            axis_pub[x].publish(vel)
 
         rate.sleep()
 
