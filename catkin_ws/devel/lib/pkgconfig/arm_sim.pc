@@ -1,8 +1,0 @@
-prefix=/catkin_ws/devel
-
-Name: arm_sim
-Description: Description of arm_sim
-Version: 1.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

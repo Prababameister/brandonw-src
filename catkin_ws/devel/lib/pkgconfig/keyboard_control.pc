@@ -1,8 +1,0 @@
-prefix=/catkin_ws/devel
-
-Name: keyboard_control
-Description: Description of keyboard_control
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
