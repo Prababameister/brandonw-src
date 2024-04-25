@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>arm_sim</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The arm_sim package provides a model of the 6-axis </description>
 
   <maintainer email="theprabab@gmail.com">Prabhvir Babra</maintainer>

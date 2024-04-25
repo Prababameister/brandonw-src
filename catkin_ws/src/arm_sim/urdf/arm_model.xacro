@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot-arm">
-  <xacro:include filename="$(find arm_sim)/urdf/arm_dimensions.xacro">
-  <xacro:include filename="$(find arm_sim)/urdf/arm_macros.xacro">
 
-  <xacro:property name="active_axis_config_file" value="$(find arm_sim)/config/activate.yaml">
-  <xacro:property name="active" value="${load_yaml(active_axis_config_file)}">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot-arm">
+  <xacro:include filename="$(find arm_sim)/urdf/arm_dimensions.xacro" />
+  <xacro:include filename="$(find arm_sim)/urdf/arm_macros.xacro" />
+
+  <xacro:property name="active_axis_config_file" value="$(find arm_sim)/settings/activate.yaml" />
+  <xacro:property name="active" value="${xacro.load_yaml(active_axis_config_file)}" />
 
   <!--- Materials to differentiate between joints -->
   <material name="purple">
@@ -17,124 +18,164 @@
   <link name="world" />
 
   <!--- Motors: these represent the stepper motors that rotate (colored yellow) -->
-  <xacro:cylinder name="joint_1" height="${height_of_j123}" radius="${radius_of_joint}" color="yellow" jmass="${motor_weight}"/>
-  <xacro:cylinder name="joint_2" height="${height_of_j123}" radius="${radius_of_joint}" color="yellow" jmass="${motor_weight}"/>
-  <xacro:cylinder name="joint_3" height="${height_of_j123}" radius="${radius_of_joint}" color="yellow" jmass="${motor_weight}"/>
-  <xacro:cylinder name="joint_4" height="${height_of_j456}" radius="${radius_of_joint}" color="yellow" jmass="${motor_weight}"/>
-  <xacro:cylinder name="joint_5" height="${height_of_j456}" radius="${radius_of_joint}" color="yellow" jmass="${motor_weight}"/>
-  <xacro:cylinder name="joint_6" height="${height_of_j456}" radius="${radius_of_joint}" color="yellow" jmass="${motor_weight}"/>
+  <xacro:cylinder name="joint_1" height="${height_of_j123}" radius="${radius_of_joint}"
+                  color="yellow" jmass="${motor_weight}"
+                  render="${active['axis_1']}" />
+
+  <xacro:cylinder name="joint_2" height="${height_of_j123}" radius="${radius_of_joint}"
+                  color="yellow" jmass="${motor_weight}"
+                  render="${active['axis_2']}"/>
+
+  <xacro:cylinder name="joint_3" height="${height_of_j123}" radius="${radius_of_joint}"
+                  color="yellow" jmass="${motor_weight}"
+                  render="${active['axis_3']}"/>
+
+  <xacro:cylinder name="joint_4" height="${height_of_j456}" radius="${radius_of_joint}"
+                  color="yellow" jmass="${motor_weight}"
+                  render="${active['axis_4']}"/>
+
+  <xacro:cylinder name="joint_5" height="${height_of_j456}" radius="${radius_of_joint}"
+                  color="yellow" jmass="${motor_weight}"
+                  render="${active['axis_5']}"/>
+
+  <xacro:cylinder name="joint_6" height="${height_of_j456}" radius="${radius_of_joint}"
+                  color="yellow" jmass="${motor_weight}"
+                  render="${active['axis_6']}"/>
 
   <!-- Limbs of the robot that exist for collision purposes (colored purple) -->
 
-  <xacro:cylinder name="link_23" height="${length_of_link23}" radius="${radius_of_limb}" color="purple" jmass="1.0"/>
-  <xacro:cylinder name="link_34" height="${length_of_link23}" radius="${radius_of_limb}" color="purple" jmass="1.0"/>
+  <xacro:cylinder name="link_23" height="${length_of_link23}" radius="${radius_of_limb}"
+                  color="purple" jmass="1.0"
+                  render="${active['axis_2']}" />
+  <xacro:cylinder name="link_34" height="${length_of_link34}" radius="${radius_of_limb}"
+                  color="purple" jmass="1.0"
+                  render="${active['axis_3']}" />
 
   <!-- End-Effector which is a box (colored purple) -->
-  <link name="end_effector">
-    <collision>
-      <geometry>
-        <box size="0.02 0.02 ${end_effector_length}"/>
-      </geometry>
-    </collision>
+  <xacro:if value="${active['axis_6']}">
+    <link name="end_effector">
+      <collision>
+        <geometry>
+          <box size="0.02 0.02 ${end_effector_length}"/>
+        </geometry>
+      </collision>
 
-    <visual>
-      <geometry>
-        <box size="0.02 0.02 ${end_effector_length}"/>
-      </geometry>
-      <material name="purple"/>
-    </visual>
+      <visual>
+        <geometry>
+          <box size="0.02 0.02 ${end_effector_length}"/>
+        </geometry>
+        <material name="purple"/>
+      </visual>
 
-    <inertial>
-      <mass value="1.0" />
-      <inertia
-          ixx="${0.02 * 0.02 + end_effector_length * end_effector_length}" ixy="0.0" ixz="0.0"
-          iyy="${0.02 * 0.02 + end_effector_length * end_effector_length}" iyz="0.0"
-          izz="${2 * 0.02 * 0.02}" />
-    </inertial>
-  </link>
+      <inertial>
+        <mass value="1.0" />
+        <inertia
+            ixx="${0.02 * 0.02 + end_effector_length * end_effector_length}" ixy="0.0" ixz="0.0"
+            iyy="${0.02 * 0.02 + end_effector_length * end_effector_length}" iyz="0.0"
+            izz="${2 * 0.02 * 0.02}" />
+      </inertial>
+    </link>
+  </xacro:if>
 
-  
-  <joint name="axis_1" type="revolute">
-    <parent link="world"/>
-    <child link="joint_1"/>
-    <limit lower="0.0" upper="${2 * pi}" effort="30" velocity="1"/>
-    <axis xyz="0 0 1"/>
-    <origin xyz="0 0 ${elevation}" rpy="0 0 0"/>
-  </joint>
+  <xacro:if value="${active['axis_1']}">
+    <joint name="axis_1" type="revolute">
+      <parent link="world"/>
+      <child link="joint_1"/>
+      <limit lower="0.0" upper="${2 * pi}" effort="30" velocity="1"/>
+      <axis xyz="0 0 1"/>
+      <origin xyz="0 0 ${elevation}" rpy="0 0 0"/>
+    </joint>
+  </xacro:if>
 
-  <joint name="axis_2" type="revolute">
-    <parent link="joint_1"/>
-    <child link="joint_2"/>
-    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
-    <axis xyz="0 0 1"/>
-    <origin xyz="${a1} 0 ${d1}" rpy="${alpha1} ${theta1} 0"/>
-  </joint>
+  <xacro:if value="${active['axis_2']}">
+    <joint name="axis_2" type="revolute">
+      <parent link="joint_1"/>
+      <child link="joint_2"/>
+      <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+      <axis xyz="0 0 1"/>
+      <origin xyz="${a1} 0 ${d1}" rpy="${alpha1} ${theta1} 0"/>
+    </joint>
+  </xacro:if>
 
-  <joint name="axis_3" type="revolute">
-    <parent link="joint_2"/>
-    <child link="joint_3"/>
-    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
-    <axis xyz="0 0 1"/>
-    <origin xyz="0 ${-a2} ${d2}" rpy="${alpha2} 0 ${theta2}"/>
-  </joint>
+  <xacro:if value="${active['axis_3']}">
+    <joint name="axis_3" type="revolute">
+      <parent link="joint_2"/>
+      <child link="joint_3"/>
+      <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+      <axis xyz="0 0 1"/>
+      <origin xyz="0 ${-a2} ${d2}" rpy="${alpha2} 0 ${theta2}"/>
+    </joint>
+  </xacro:if>
 
-  <joint name="link_to_joint_2" type="fixed">
-    <parent link="joint_2"/>
-    <child link="link_23"/>
-    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
-    <origin xyz="0 ${-length_of_link23 / 2} ${d2}" rpy="${pi / 2} 0 0" />
-  </joint>
+  <xacro:if value="${active['axis_2']}">
+    <joint name="link_to_joint_2" type="fixed">
+      <parent link="joint_2"/>
+      <child link="link_23"/>
+      <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+      <origin xyz="0 ${-length_of_link23 / 2} ${d2}" rpy="${pi / 2} 0 0" />
+    </joint>
+  </xacro:if>
 
-  <joint name="axis_4" type="revolute">
-    <parent link="joint_3"/>
-    <child link="joint_4"/>
-    <limit lower="0" upper="${2 * pi}" effort="30" velocity="1"/>
-    <axis xyz="0 0 1"/>
-    <origin xyz="0 ${a3} 0" rpy="${-alpha3} 0 ${theta3}"/>
-  </joint>
+  <xacro:if value="${active['axis_4']}">
+    <joint name="axis_4" type="revolute">
+      <parent link="joint_3"/>
+      <child link="joint_4"/>
+      <limit lower="0" upper="${2 * pi}" effort="30" velocity="1"/>
+      <axis xyz="0 0 1"/>
+      <origin xyz="0 ${a3} 0" rpy="${-alpha3} 0 ${theta3}"/>
+    </joint>
+  </xacro:if>
 
-  <joint name="link_to_joint_3" type="fixed">
-    <parent link="joint_3"/>
-    <child link="link_34"/>
-    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
-    <origin xyz="0 ${(length_of_link34 + radius_of_joint) / 2} ${height_of_j123}" rpy="${pi / 2} 0 0" />
-  </joint>
+  <xacro:if value="${active['axis_3']}">
+    <joint name="link_to_joint_3" type="fixed">
+      <parent link="joint_3"/>
+      <child link="link_34"/>
+      <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+      <origin xyz="0 ${(length_of_link34 + radius_of_joint) / 2} ${height_of_j123}" rpy="${pi / 2} 0 0" />
+    </joint>
+  </xacro:if>
 
-  <joint name="axis_5" type="revolute">
-    <parent link="joint_4"/>
-    <child link="joint_5"/>
-    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
-    <axis xyz="0 0 1"/>
-    <origin xyz="${a4} 0 ${d4}" rpy="${alpha4} 0 ${theta4}"/>
-  </joint>
+  <xacro:if value="${active['axis_5']}">
+    <joint name="axis_5" type="revolute">
+      <parent link="joint_4"/>
+      <child link="joint_5"/>
+      <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+      <axis xyz="0 0 1"/>
+      <origin xyz="${a4} 0 ${d4}" rpy="${alpha4} 0 ${theta4}"/>
+    </joint>
+  </xacro:if>
 
-  <joint name="axis_6" type="revolute">
-    <parent link="joint_5"/>
-    <child link="joint_6"/>
-    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
-    <axis xyz="0 0 1"/>
-    <origin xyz="${a5} 0 ${d5}" rpy="${alpha5} 0 ${theta5}"/>
-  </joint>
+  <xacro:if value="${active['axis_6']}">
+    <joint name="axis_6" type="revolute">
+      <parent link="joint_5"/>
+      <child link="joint_6"/>
+      <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+      <axis xyz="0 0 1"/>
+      <origin xyz="${a5} 0 ${d5}" rpy="${alpha5} 0 ${theta5}"/>
+    </joint>
+  </xacro:if>
 
-  <joint name="joint_transform_6" type="fixed">
-    <parent link="joint_6"/>
-    <child link="end_effector"/>
-    <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
-    <axis xyz="0 0 1"/>
-    <origin xyz="0 0 ${end_effector_length}" rpy="0 0 0"/>
-  </joint>
+  <xacro:if value="${active['axis_6']}">
+    <joint name="joint_transform_6" type="fixed">
+      <parent link="joint_6"/>
+      <child link="end_effector"/>
+      <limit lower="${-pi}" upper="${pi}" effort="30" velocity="1"/>
+      <axis xyz="0 0 1"/>
+      <origin xyz="0 0 ${end_effector_length}" rpy="0 0 0"/>
+    </joint>
+  </xacro:if>
 
-  <xacro:axis_trans_def name="axis_1"/>
-  <xacro:axis_trans_def name="axis_2"/>
-  <xacro:axis_trans_def name="axis_3"/>
-  <xacro:axis_trans_def name="axis_4"/>
-  <xacro:axis_trans_def name="axis_5"/>
-  <xacro:axis_trans_def name="axis_6"/>
+  <xacro:axis_trans_def name="axis_1" render="${active['axis_1']}"/>
+  <xacro:axis_trans_def name="axis_2" render="${active['axis_2']}"/>
+  <xacro:axis_trans_def name="axis_3" render="${active['axis_3']}"/>
+  <xacro:axis_trans_def name="axis_4" render="${active['axis_4']}"/>
+  <xacro:axis_trans_def name="axis_5" render="${active['axis_5']}"/>
+  <xacro:axis_trans_def name="axis_6" render="${active['axis_6']}"/>
 
   <!-- Gazebo plugin -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/arm_robot</robotNamespace>
+      <robotNamespace>/</robotNamespace>
     </plugin>
   </gazebo>
 </robot>

@@ -5,5 +5,6 @@
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("gtest")
-subdirs("keyboard_control")
+subdirs("joint_state_service")
+subdirs("arm_keyboard_controller")
 subdirs("arm_sim")

@@ -1,5 +1,5 @@
 set(_CATKIN_CURRENT_PACKAGE "arm_sim")
-set(arm_sim_VERSION "0.0.0")
+set(arm_sim_VERSION "1.0.0")
 set(arm_sim_MAINTAINER "Prabhvir Babra <theprabab@gmail.com>")
 set(arm_sim_PACKAGE_FORMAT "2")
 set(arm_sim_BUILD_DEPENDS "roscpp" "rospy" "std_msgs" "urdf" "controller_manager" "joint_state_controller" "robot_state_controller")

@@ -1,6 +1,6 @@
-#include <Stepper.h>
+#include <AccelStepper.h>
 #include <ros.h>
-#include <std_msgs/String.h>
+#include <std_msgs/Float64.h>
 
 ros::NodeHandle nh;
 
@@ -12,29 +12,27 @@ ros::NodeHandle nh;
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 
 // initialize the stepper library on pins 8 through 11:
-Stepper myStepper(stepsPerRevolution, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
+AccellStepper axis(AccelStepper:DRIVER, stepsPerRevolution, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
 
-void messageStepper(const std_msgs::String& control_msg) {
-  String c = control_msg.data;
+void messageAxis(const std_msgs::Float64& control_msg) {
+  float p = control_msg.data;
 
-  Serial.println("Input" + c);
+  Serial.println("Input: " + p);
 
-  int steps = 0;
-  if(c == "r")
-    steps = stepsPerRevolution;
-  else if(c == "f")
-    steps = -stepsPerRevolution;
+  long step_pos = p / 2 * 3.1415 * stepsPerRevolution;
 
-  myStepper.step(steps);
+  axis.moveTo(step_pos);
 }
 
-ros::Subscriber<std_msgs::String> sub("keypubber", &messageStepper);
+ros::Subscriber<std_msgs::String> sub("/arm_axis_1_controller", &messageAxis);
 
 void setup() {
   // set the speed at 60 rpm:
   myStepper.setSpeed(60);
   // initialize the serial port:
   Serial.begin(9600);
+
+  axis.setCurrentPosition();
 
   nh.initNode();
   nh.subscribe(sub);

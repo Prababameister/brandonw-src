@@ -1,2 +1,2 @@
-arm_sim:keyboard_control
+arm_keyboard_controller:arm_sim:joint_state_service
 -DCATKIN_DEVEL_PREFIX=/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/catkin_ws/install -G Unix Makefiles

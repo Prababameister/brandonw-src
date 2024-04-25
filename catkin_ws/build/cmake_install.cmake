@@ -131,7 +131,8 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/catkin_ws/build/gtest/cmake_install.cmake")
-  include("/catkin_ws/build/keyboard_control/cmake_install.cmake")
+  include("/catkin_ws/build/joint_state_service/cmake_install.cmake")
+  include("/catkin_ws/build/arm_keyboard_controller/cmake_install.cmake")
   include("/catkin_ws/build/arm_sim/cmake_install.cmake")
 
 endif()

@@ -1,21 +1,2 @@
-arm_robot:
-    type: "joint_state_controller/JointStateController"
-    publish_rate: 50
-
-arm_controller:
-    type: "position_controllers/JointTrajectoryController"
-    joints:
-        - axis_1
-        - axis_2
-        - axis_3
-        - axis_4
-        - axis_5
-        - axis_6
-
-    constraints:
-        goal_time: 10.0
-
-    state_publish_rate: 50
-    action_monitor_rate: 30
-    stop_trajectory_duration: 0
-
+type: "joint_state_controller/JointStateController"
+publish_rate: 50

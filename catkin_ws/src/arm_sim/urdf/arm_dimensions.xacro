@@ -1,7 +1,7 @@
-<!--- Dimensions of the robot arm -->
 <?xml version="1.0"?>
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!--- Dimensions of the robot arm -->
   <!--- General properties of motors and limbs of arm -->
   <xacro:property name="radius_of_joint" value="0.0459" />
   

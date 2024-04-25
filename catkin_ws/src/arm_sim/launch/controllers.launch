@@ -2,13 +2,39 @@
   <arg name="model" default="$(find arm_sim)/urdf/arm_model.xacro"/>
   <arg name="rvizconfig" default="$(find arm_sim)/rviz/urdf.rviz" />
 
-  <include file="$(find arm_sim)/launch/gazebo_sim.launch" />
+  <include file="$(find arm_sim)/launch/gazebo.launch" />
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
 
+  <rosparam command="load"
+            file="$(find arm_sim)/config/joints.yaml"
+            ns="arm_joint_state_controller" />
+  <rosparam command="load"
+            file="$(find arm_sim)/config/axis_1_controller.yaml"
+            ns="arm_axis_1_controller" />
+  <rosparam command="load"
+            file="$(find arm_sim)/config/axis_2_controller.yaml"
+            ns="arm_axis_2_controller" />
+  <rosparam command="load"
+            file="$(find arm_sim)/config/axis_3_controller.yaml"
+            ns="arm_axis_3_controller" />
+  <rosparam command="load"
+            file="$(find arm_sim)/config/axis_4_controller.yaml"
+            ns="arm_axis_4_controller" />
+  <rosparam command="load"
+            file="$(find arm_sim)/config/axis_5_controller.yaml"
+            ns="arm_axis_5_controller" />
+  <rosparam command="load"
+            file="$(find arm_sim)/config/axis_6_controller.yaml"
+            ns="arm_axis_6_controller" />
+
   <node name="arm_controller_spawner" pkg="controller_manager" type="spawner"
     args="arm_joint_state_controller
-          arm_controller
-          gazebo_ros_control_params
-          --timeout 50"/>
+          arm_axis_1_controller
+          arm_axis_2_controller
+          arm_axis_3_controller
+          arm_axis_4_controller
+          arm_axis_5_controller
+          arm_axis_6_controller
+          --timeout 10"/>
 </launch>

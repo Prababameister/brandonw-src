@@ -2,7 +2,7 @@ prefix=/catkin_ws/install
 
 Name: arm_sim
 Description: Description of arm_sim
-Version: 0.0.0
+Version: 1.0.0
 Cflags: 
 Libs: -L${prefix}/lib 
 Requires: 
