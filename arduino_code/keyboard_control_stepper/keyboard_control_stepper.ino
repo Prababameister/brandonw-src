@@ -12,7 +12,7 @@ ros::NodeHandle nh;
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 
 // initialize the stepper library on pins 8 through 11:
-AccellStepper axis(AccelStepper:DRIVER, stepsPerRevolution, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
+AccelStepper axis(AccelStepper:DRIVER, stepsPerRevolution, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
 
 void messageAxis(const std_msgs::Float64& control_msg) {
   float p = control_msg.data;
@@ -21,10 +21,10 @@ void messageAxis(const std_msgs::Float64& control_msg) {
 
   long step_pos = p / 2 * 3.1415 * stepsPerRevolution;
 
-  axis.moveTo(step_pos);
+  axis.runSpeed(step_pos);
 }
 
-ros::Subscriber<std_msgs::String> sub("/arm_axis_1_controller", &messageAxis);
+ros::Subscriber<std_msgs::Float64> sub("/arm_axis_1_controller/command", &messageAxis);
 
 void setup() {
   // set the speed at 60 rpm:
