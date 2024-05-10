@@ -20,7 +20,7 @@ control_keys = [ ['q', 'a'],
 
 quit_key = '/'
 
-sensitivity = 0.2
+sensitivity = 10
 
 axis_pub = []
 

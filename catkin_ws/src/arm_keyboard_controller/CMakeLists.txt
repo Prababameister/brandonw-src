@@ -5,10 +5,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  urdf
-  controller_manager
-  joint_state_controller
-  robot_state_controller
 )
 
 catkin_package()

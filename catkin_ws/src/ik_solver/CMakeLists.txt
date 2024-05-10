@@ -10,6 +10,10 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
 )
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JSONCPP jsoncpp)
+link_libraries(${JSONCPP_LIBRARIES})
+
 find_package(Eigen REQUIRED)
 include_directories(${Eigen_INCLUDE_DIRS})
 
@@ -29,6 +33,7 @@ add_executable(ik_solver src/ik_solver.cc)
 target_link_libraries(ik_solver
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}
+  ${JSONCPP_LIBRARIES}
 )
 
 catkin_package()
