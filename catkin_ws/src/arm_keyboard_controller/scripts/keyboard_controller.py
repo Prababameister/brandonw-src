@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-from std_msgs.msg import Float64
+from std_msgs.msg import Float64, Bool
 
 import sys
 from select import select
@@ -20,7 +20,7 @@ control_keys = [ ['q', 'a'],
 
 quit_key = '/'
 
-sensitivity = 10
+sensitivity = 20
 
 axis_pub = []
 
@@ -47,6 +47,8 @@ def getKey(settings, timeout):
 
     return key
 
+electromag_pub = rospy.Publisher('/arm_electromagnet/command', Bool, queue_size=1)
+
 def keyboard_controller():
     rospy.init_node('keyboard_controller', anonymous=True)
 
@@ -66,6 +68,9 @@ def keyboard_controller():
                 vel = -sensitivity
 
             axis_pub[x].publish(vel)
+
+        if k == 'p':
+            electromag_pub.publish(1)
 
         rate.sleep()
 
