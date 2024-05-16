@@ -9,7 +9,7 @@ axis_pub = []
 electromag_pub = rospy.Publisher('/arm_electromagnet/command', Bool, queue_size=1)
 
 def get_velocity(raw_value):
-    return sensitivity * (raw_value - 540) / 540
+    return sensitivity * (raw_value) / 512
 
 def callback(data):
     rospy.loginfo(rospy.get_caller_id() + "Gampad State %s", data)

@@ -59,8 +59,10 @@ float av1, av2, av3, av4, av5, av6;
 int J1_xVal, J1_yVal, J2_xVal, J2_yVal, J3_xVal, J3_yVal;
 bool J1_button, J2_button, J3_button;
 
+// Threshold to prevent the robot from acting from slight deviations
 float threshold = 0.4;
 
+// Method callbacks for each axis
 void messageAxis1 (const std_msgs::Float64& control_msg) {
   float p = control_msg.data;
 
@@ -139,11 +141,6 @@ void messageAxis6 (const std_msgs::Float64& control_msg) {
     av6 = 0;
 }
 
-// void gripper_callback (const std_msgs::Float64& control_msg) {
-//   
-// }
-// 
-
 bool electromag_toggle = 0;
 void electromag_callback (const std_msgs::Bool& toggle) {
   if (electromag_toggle) {
@@ -167,6 +164,9 @@ ros::Subscriber<std_msgs::Bool> electromag_sub("/arm_electromagnet/command", &el
 
 arm_gamepad_controller::Gamepad gamepad_state;
 ros::Publisher gamepad_state_pub("/gamepad_state", &gamepad_state);
+
+// Calibration values for joysticks
+int j1x_cal, j1y_cal, j2x_cal, j2y_cal, j3x_cal, j3y_cal;
 
 void setup() {
   // initialize the serial port:
@@ -211,6 +211,13 @@ void setup() {
   nh.subscribe(sub6);
   nh.subscribe(electromag_sub);
 
+  j1x_cal = analogRead(J1_VRX_PIN);
+  j1y_cal = analogRead(J1_VRY_PIN);
+  j2x_cal = analogRead(J2_VRX_PIN);
+  j2y_cal = analogRead(J2_VRY_PIN);
+  j3x_cal = analogRead(J3_VRX_PIN);
+  j3y_cal = analogRead(J3_VRY_PIN);
+
 //  int robot_state = digitalRead(ROBOT_MODE_TOGGLE_PIN);
 //  if (robot_state == 0) {
 //    nh.subscribe(electromag_sub);
@@ -253,16 +260,16 @@ void loop() {
   J3_yVal = analogRead(J3_VRY_PIN);
   J3_button = digitalRead(J3_BUTTON_PIN);
 
-  gamepad_state.j1_vrx = J1_xVal;
-  gamepad_state.j1_vry = J1_yVal;
+  gamepad_state.j1_vrx = J1_xVal - j1x_cal;
+  gamepad_state.j1_vry = J1_yVal - j1y_cal;
   gamepad_state.j1_button = J1_button;
 
-  gamepad_state.j2_vrx = J2_xVal;
-  gamepad_state.j2_vry = J2_yVal;
+  gamepad_state.j2_vrx = J2_xVal - j2x_cal;
+  gamepad_state.j2_vry = J2_yVal - j2y_cal;
   gamepad_state.j2_button = J2_button;
 
-  gamepad_state.j3_vrx = J3_xVal;
-  gamepad_state.j3_vry = J3_yVal;
+  gamepad_state.j3_vrx = J3_xVal - j3x_cal;
+  gamepad_state.j3_vry = J3_yVal - j3y_cal;
   gamepad_state.j3_button = J3_button;
 
   gamepad_state_pub.publish( &gamepad_state );
@@ -290,5 +297,5 @@ void loop() {
 
   nh.spinOnce();
 
-  delay(1);
+  delay(10);
 }
