@@ -1,8 +1,0 @@
-prefix=/catkin_ws/install
-
-Name: arm_keyboard_controller
-Description: Description of arm_keyboard_controller
-Version: 0.1.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
