@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>controller_coordinator</name>
+  <version>0.1.0</version>
+  <description> This processes input from any controller and converts it into raw velocities to use for the arm </description>
+
+  <maintainer email="theprabab@gmail.com">root</maintainer>
+
+ <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+
+  </export>
+</package>

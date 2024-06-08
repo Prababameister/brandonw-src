@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(keyboard_controller)
+project(keyboard_relay)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
